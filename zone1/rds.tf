@@ -5,7 +5,7 @@ module "project_rds_p" {
 }
 
 module "project_rds_s" {
-  source                  = "./modules/rds-s"
+  source = "./modules/rds-s"
   primary_db_cluster_arn  = module.project_rds_p.db_cluster_arn
   providers = {
     aws = aws.usw1

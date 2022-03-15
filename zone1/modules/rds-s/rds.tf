@@ -34,11 +34,14 @@ resource "aws_rds_cluster" "udacity_cluster-s" {
   engine_version           = "5.6.mysql_aurora.1.19.1" 
   skip_final_snapshot      = true
   storage_encrypted        = false
+  replication_source_identifier = var.primary_db_cluster_arn
+  source_region            = "us-east-2"
+  backup_retention_period  = 5
   depends_on = [aws_rds_cluster_parameter_group.cluster_pg-s]
 }
 
 resource "aws_rds_cluster_instance" "udacity_instance-s" {
-  count                = 1
+  count                = 2
   identifier           = "udacity-db-instance-${count.index}-s"
   cluster_identifier   = aws_rds_cluster.udacity_cluster-s.id
   instance_class       = "db.t2.small"
